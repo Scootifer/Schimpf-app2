@@ -1,0 +1,35 @@
+@startuml
+
+InventoryManagerController -> InventoryManagerCore
+
+class InventoryManagerController {
+
+
+}
+
+class InventoryManagerCore{
++ObservableList<InventoryItem> inventory
++ObservableList<InventoryItem> display_list
++InventoryItem selectedItem
+
+-SortByPrice()
+-SortBySerialNumber()
+-SortByName()
+-SearchName(String name)
+-SearchSerial(String serial)
+-ValidateSerialNumber(String serial)
+-ValidateItemPrice(double price)
+-ValidateItemName(Sting name)
+-ClearInventory()
+-DeleteSelectedItem()
+-EditSelectedItemName(String name)
+-EditSelectedItemSerial(String serial)
+-EditSelectedItemPrice(double price)
+}
+class InventoryItem{
++String serial_number
++String name
++Double price
+
+}
+@enduml
