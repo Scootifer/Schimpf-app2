@@ -18,7 +18,7 @@ class InventoryManagerCore{
 -SearchName(String name)
 -SearchSerial(String serial)
 -ValidateSerialNumber(String serial)
--ValidateItemPrice(double price)
+-ValidateItemPrice(String price)
 -ValidateItemName(Sting name)
 -ClearInventory()
 -DeleteSelectedItem()
