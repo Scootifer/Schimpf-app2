@@ -11,17 +11,19 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.org.inventoryapplication.InventoryManagerController">
    <center>
-      <ListView maxHeight="425.0" maxWidth="474.0" prefHeight="425.0" prefWidth="315.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="ListViewID" maxHeight="425.0" maxWidth="474.0" prefHeight="425.0" prefWidth="315.0" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane prefHeight="350.0" prefWidth="111.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="350.0" prefWidth="90.0" BorderPane.alignment="CENTER">
          <children>
-            <RadioButton fx:id="SortNameBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Name">
+            <RadioButton fx:id="SortNameBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#SortNameBtnClick" text="Name">
                <toggleGroup>
                   <ToggleGroup fx:id="SortGroup" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="SortSerialBtn" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" text="Serial Number" toggleGroup="$SortGroup" />
-            <RadioButton fx:id="SortPriceBtn" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" text="Price" toggleGroup="$SortGroup" />
+            <RadioButton fx:id="SortSerialBtn" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onAction="#SortSerialNumClick" text="Serial Number" toggleGroup="$SortGroup" />
+            <RadioButton fx:id="SortPriceBtn" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" onAction="#SortPriceClick" text="Price" toggleGroup="$SortGroup" />
+            <Button fx:id="SaveBtn" layoutY="311.0" mnemonicParsing="false" onAction="#SaveBtnClick" text="Save" />
+            <Button fx:id="LoadBtn" layoutX="67.0" layoutY="305.0" mnemonicParsing="false" onAction="#LoadBtnClick" text="Load" />
          </children>
       </AnchorPane>
    </left>
@@ -32,8 +34,8 @@
             <TextField fx:id="SearchNameField" layoutX="256.0" layoutY="13.0" promptText="Name" />
             <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search:" />
             <Text layoutX="227.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or" />
-            <Button fx:id="SearchBtn" layoutX="428.0" layoutY="13.0" mnemonicParsing="false" text="Search" />
-            <Button fx:id="ShowAllBtn" layoutX="505.0" layoutY="13.0" mnemonicParsing="false" text="Show All" />
+            <Button fx:id="SearchBtn" layoutX="428.0" layoutY="13.0" mnemonicParsing="false" onAction="#searchBtnClick" text="Search" />
+            <Button fx:id="ShowAllBtn" layoutX="505.0" layoutY="13.0" mnemonicParsing="false" onAction="#showAllBtnClick" text="Show All" />
          </children></AnchorPane>
    </top>
    <right>
@@ -43,10 +45,10 @@
             <TextField fx:id="NameField" layoutY="77.0" promptText="Name" />
             <TextField fx:id="PriceField" layoutX="24.0" layoutY="117.0" prefHeight="25.0" prefWidth="44.0" promptText="USD" />
             <Text layoutX="11.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" />
-            <Button fx:id="AddBtn" layoutX="83.0" layoutY="117.0" mnemonicParsing="false" text="Add" />
-            <Button fx:id="EditBtn" layoutX="20.0" layoutY="175.0" mnemonicParsing="false" text="Edit" />
-            <Button fx:id="ClearBtn" layoutX="47.0" layoutY="226.0" mnemonicParsing="false" text="Clear" />
-            <Button fx:id="RemoveBtn" layoutX="76.0" layoutY="175.0" mnemonicParsing="false" text="Remove" />
+            <Button fx:id="AddBtn" layoutX="83.0" layoutY="117.0" mnemonicParsing="false" onAction="#addItem" text="Add" />
+            <Button fx:id="EditBtn" layoutX="20.0" layoutY="175.0" mnemonicParsing="false" onAction="#editItem" text="Edit" />
+            <Button fx:id="ClearBtn" layoutX="47.0" layoutY="226.0" mnemonicParsing="false" onAction="#clearBtnClick" text="Clear" />
+            <Button fx:id="RemoveBtn" layoutX="76.0" layoutY="175.0" mnemonicParsing="false" onAction="#removeBtnClick" text="Remove" />
          </children>
       </AnchorPane>
    </right>
