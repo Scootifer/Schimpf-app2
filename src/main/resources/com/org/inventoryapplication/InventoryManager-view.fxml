@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.org.inventoryapplication.InventoryManagerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.org.inventoryapplication.InventoryManagerController">
    <center>
-      <ListView fx:id="ListViewID" maxHeight="425.0" maxWidth="474.0" prefHeight="425.0" prefWidth="315.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="ListViewID" prefHeight="425.0" prefWidth="315.0" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane prefHeight="350.0" prefWidth="90.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxWidth="125.0" minWidth="109.0" prefHeight="350.0" prefWidth="125.0" BorderPane.alignment="CENTER">
          <children>
             <RadioButton fx:id="SortNameBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#SortNameBtnClick" text="Name">
                <toggleGroup>
@@ -28,7 +28,7 @@
       </AnchorPane>
    </left>
    <top>
-      <AnchorPane prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="55.0" minHeight="54.0" prefHeight="55.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="SearchSerialField" layoutX="64.0" layoutY="13.0" promptText="Serial Number" />
             <TextField fx:id="SearchNameField" layoutX="256.0" layoutY="13.0" promptText="Name" />
@@ -36,12 +36,15 @@
             <Text layoutX="227.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or" />
             <Button fx:id="SearchBtn" layoutX="428.0" layoutY="13.0" mnemonicParsing="false" onAction="#searchBtnClick" text="Search" />
             <Button fx:id="ShowAllBtn" layoutX="505.0" layoutY="13.0" mnemonicParsing="false" onAction="#showAllBtnClick" text="Show All" />
+            <Text layoutX="127.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Serial Number" />
+            <Text layoutX="256.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+            <Text layoutX="1045.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
          </children></AnchorPane>
    </top>
    <right>
       <AnchorPane prefHeight="350.0" prefWidth="148.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="SerialNumField" layoutY="37.0" prefHeight="25.0" prefWidth="148.0" promptText="Serial Number" />
+            <TextField fx:id="SerialNumField" layoutY="37.0" maxWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Serial Number" />
             <TextField fx:id="NameField" layoutY="77.0" promptText="Name" />
             <TextField fx:id="PriceField" layoutX="24.0" layoutY="117.0" prefHeight="25.0" prefWidth="44.0" promptText="USD" />
             <Text layoutX="11.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" />
@@ -49,7 +52,12 @@
             <Button fx:id="EditBtn" layoutX="20.0" layoutY="175.0" mnemonicParsing="false" onAction="#editItem" text="Edit" />
             <Button fx:id="ClearBtn" layoutX="47.0" layoutY="226.0" mnemonicParsing="false" onAction="#clearBtnClick" text="Clear" />
             <Button fx:id="RemoveBtn" layoutX="76.0" layoutY="175.0" mnemonicParsing="false" onAction="#removeBtnClick" text="Remove" />
+            <Text layoutX="37.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Serial Number" />
+            <Text layoutX="57.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
          </children>
       </AnchorPane>
    </right>
+   <bottom>
+      <AnchorPane maxHeight="1.0" maxWidth="1.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

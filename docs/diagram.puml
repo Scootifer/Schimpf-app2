@@ -25,6 +25,10 @@ class InventoryManagerCore{
 -EditSelectedItemName(String name)
 -EditSelectedItemSerial(String serial)
 -EditSelectedItemPrice(double price)
+-Save()
+-Load()
+-void setCurrentCell(InventoryItem currentCell)
+-boolean cellSelectedDoesNotExist
 }
 class InventoryItem{
 +String serial_number
