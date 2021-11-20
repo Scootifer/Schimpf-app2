@@ -1,7 +1,14 @@
 package com.org.inventoryapplication;
 
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Scott Schimpf
+ */
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
 
 // Welcome to the core of the inventory manager. Most methods here will operate on a PASS or FAIL scale
 // A method will return 0 for pass, or -1 for fail as declared by the final variables
@@ -11,9 +18,13 @@ public class InventoryManagerCore {
 
     final int PASS = 0;
     final int FAIL = -1;
+    final int FAIL_ITEM_NOT_FOUND = -1;
+    final int FAIL_ITEM_EXISTS = -2;
 
-    ObservableList<InventoryItem> inventory = FXCollections.observableArrayList();
-    ObservableList<InventoryItem> display_list = FXCollections.observableArrayList();
+    ArrayList<InventoryItem> inventory = new ArrayList<>();
+
+    //ObservableList<InventoryItem> inventory = FXCollections.observableArrayList();
+    ObservableList<InventoryItem> display_list = FXCollections.observableArrayList(inventory);
     InventoryItem selectedItem;
 
     //0 for show all, 1 for price, 2 for serial, 3 for name
@@ -33,10 +44,10 @@ public class InventoryManagerCore {
     //the sorting will be done by an insertion sort
     void sortByPrice(){
 
-        ObservableList<InventoryItem> previous_list = this.display_list;
-        this.display_list = FXCollections.observableArrayList();
+        this.display_list.clear();
+        this.current_sort = 1;
 
-        for(InventoryItem i : previous_list) {
+        for(InventoryItem i : this.inventory) {
 
             if(this.display_list.size() == 0) {
                 this.display_list.add(i);
@@ -48,12 +59,14 @@ public class InventoryManagerCore {
 
                 if(i.getPrice() >= current.getPrice()) {
                     this.display_list.add(x, i);
-                    break;
+                    x=this.display_list.size() +1; //to stop the nested loop without stopping the original one.
+                }
+                else if(x== this.display_list.size()-1) {
+                    this.display_list.add(i);
                 }
 
             }
         }
-
 
     }
 
@@ -61,54 +74,199 @@ public class InventoryManagerCore {
     //the sorting will be done by the FXCollections sort and a comparator
     void sortBySerialNumber() {
 
+
+        this.display_list.clear();
+        this.current_sort = 2;
+
+        for(InventoryItem i : this.inventory) {
+
+            if(this.display_list.size() == 0) {
+                this.display_list.add(i);
+                continue;
+            }
+
+            for(int x = 0; x<this.display_list.size(); x++) {
+                InventoryItem current = display_list.get(x);
+
+                if(i.getName().compareTo(current.getName()) >= 0) {
+                    this.display_list.add(x, i);
+                    x=this.display_list.size() +1; //to stop the nested loop without stopping the original one.
+                }
+                else if(x== this.display_list.size()-1) {
+                    this.display_list.add(i);
+                }
+
+            }
+        }
+
     }
 
-    //sorts the display list and returns it
-    //the sorting will be done by the FXCollections sort and a comparator
+    //sorts the display list
+    // The sorting is done by coming each item with the compareto function.
     void sortByName() {
+
+        this.display_list.clear();
+        this.current_sort = 3;
+
+        for(InventoryItem i : this.inventory) {
+
+            if(this.display_list.size() == 0) {
+                this.display_list.add(i);
+                continue;
+            }
+
+            for(int x = 0; x<this.display_list.size(); x++) {
+                InventoryItem current = display_list.get(x);
+
+                if(i.getName().compareTo(current.getName()) >= 0) {
+                    this.display_list.add(x, i);
+                    x=this.display_list.size() +1; //to stop the nested loop without stopping the original one.
+                }
+                else if(x== this.display_list.size()-1) {
+                    this.display_list.add(i);
+                }
+
+            }
+        }
 
     }
 
     //Traverses the list and sets display list as a list containing only the same name items
     int searchName(String name) {
-        return PASS;
+        this.display_list.clear();
+        this.selectedItem = null;
+        boolean found = false;
+
+        for(InventoryItem i : this.inventory) {
+            if(i.getName().equals(name)) {
+                this.display_list.add(i);
+                found = true;
+            }
+        }
+
+
+        if(found) return PASS;
+        else return FAIL_ITEM_NOT_FOUND;
     }
 
     //Traverses the list and sets display list as a list containing only the same serial number item
-    //TODO add flag for no item found
-    int SearchSerial(String serial) { return PASS;}
+    int searchSerial(String serial) {
+        this.display_list.clear();
+        this.selectedItem = null;
+
+
+        for (InventoryItem i : this.inventory) {
+
+            if (i.getSerial_number().equals(serial)) {
+                this.display_list.add(i);
+                return PASS;
+            }
+        }
+        return FAIL_ITEM_NOT_FOUND;
+    }
 
     //will validate the passed string and return 0 for valid or -1 for invalid format, or -2 for duplicate serial number
     int validateSerialNumber(String serial) {
+
+        if(serial == null || serial.length() == 0) {
+            return FAIL;
+        }
+
+        if(serial.length() != 13) {
+            return FAIL;
+        }
+
+        char c = serial.charAt(0);
+        if( !(c >64 && c<91) && !(c>96 && c<123) ) {
+            return FAIL;
+        }
+
+        try {
+            Integer.parseInt(serial.substring(2,5));
+            Integer.parseInt(serial.substring(6,9));
+            Integer.parseInt(serial.substring(10));
+        }catch (Exception e) {
+            return FAIL;
+        }
+
+        for(InventoryItem i : this.inventory) {
+            if(i.getSerial_number().equals(serial)) return FAIL_ITEM_EXISTS;
+        }
+
         return PASS;
     }
 
     //will validate the passed string and return 0 for valid or -1 for invalid
     int validateItemPrice(String price) {
+        try {
+            if(Integer.parseInt(price) >= 0) return PASS;
+        } catch(Exception e) {
+            return FAIL;
+        }
         return PASS;
     }
 
     //will validate the passed string and return 0 for valid or -1 for invalid
     int validateItemName(String name) {
+        int len = name.length();
+        if(len < 2 || len > 256) {
+            return FAIL;
+        }
         return PASS;
     }
 
     //clears both the display and inventory list and returns an empty list
-    void clearInventory() {}
+    void clearInventory() {
+        this.inventory.clear();
+        this.display_list.clear();
+        this.current_sort = 0;
+    }
 
     //removes the currently selected item and changes the display and inventory list.
-    int deleteSelectedItem() {
-        return PASS;
+    void removeSelectedItem() {
+        if (cellSelectedDoesNotExist()) {
+            return;
+        }
+        inventory.remove(this.selectedItem);
+        refreshDisplayList();
     }
 
     //edits the selected item, and then replaces it with a new but modified copy
-    void editSelectedItemName(String name) {}
+    void editSelectedItemName(String name) {
+        if(cellSelectedDoesNotExist() || validateItemName(name) == FAIL) {
+            return;
+        }
+
+        int index = inventory.indexOf(this.selectedItem);
+        this.selectedItem.setName(name);
+        this.inventory.remove(index);
+        this.inventory.add(index, this.selectedItem);
+
+    }
 
     //edits the selected item, and then replaces it with a new but modified copy
-    void editSelectedItemSerial(String serial) {}
+    void editSelectedItemSerial(String serial) {
+        if(cellSelectedDoesNotExist() || validateSerialNumber(serial) == FAIL) {
+            return;
+        }
+
+        int index = inventory.indexOf(this.selectedItem);
+        this.selectedItem.setSerial_number(serial);
+        this.inventory.remove(index);
+        this.inventory.add(index, this.selectedItem);
+    }
 
     //edits the selected item, and then replaces it with a new but modified copy
-    void editSelectedItemPrice(double price) {}
+    void editSelectedItemPrice(String price) {
+        if(cellSelectedDoesNotExist() || validateItemPrice(price) == FAIL) {
+            return;
+        }
+
+        int index = inventory.indexOf(this.selectedItem);
+        this.selectedItem.setPrice(Double.parseDouble(price));
+        this.inventory.remove(index);
+        this.inventory.add(index, this.selectedItem);
+    }
 
     void save(){
 
@@ -120,11 +278,16 @@ public class InventoryManagerCore {
 
     void refreshDisplayList(){
         switch (this.current_sort) {
-            case 0 -> this.display_list = this.inventory;
+            case 0 -> this.display_list = FXCollections.observableArrayList(inventory);
             case 1 -> sortByPrice();
             case 2 -> sortBySerialNumber();
             case 3 -> sortByName();
         }
+    }
+
+    void showAll(){
+        this.current_sort = 0;
+        refreshDisplayList();
     }
 
     //returns if a cell is selected, used to avoid the onclick event handler from producing an error
@@ -132,7 +295,7 @@ public class InventoryManagerCore {
         return selectedItem == null;
     }
 
-    //sets the datamanagers focus, this is the item that will be acted on in most functions.
+    //sets the focus, this is the item that will be acted on in most functions.
     public void setCurrentCell(InventoryItem currentCell) {
         this.selectedItem = currentCell;
     }

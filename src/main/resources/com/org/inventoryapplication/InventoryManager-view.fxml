@@ -14,16 +14,17 @@
       <ListView fx:id="ListViewID" prefHeight="425.0" prefWidth="315.0" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane maxWidth="125.0" minWidth="109.0" prefHeight="350.0" prefWidth="125.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxWidth="133.0" minWidth="109.0" prefHeight="444.0" prefWidth="133.0" BorderPane.alignment="CENTER">
          <children>
-            <RadioButton fx:id="SortNameBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#SortNameBtnClick" text="Name">
+            <RadioButton fx:id="SortNameBtn" layoutX="9.0" layoutY="20.0" mnemonicParsing="false" onAction="#SortNameBtnClick" text="Name">
                <toggleGroup>
                   <ToggleGroup fx:id="SortGroup" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="SortSerialBtn" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onAction="#SortSerialNumClick" text="Serial Number" toggleGroup="$SortGroup" />
-            <RadioButton fx:id="SortPriceBtn" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" onAction="#SortPriceClick" text="Price" toggleGroup="$SortGroup" />
-            <Button fx:id="SaveBtn" layoutY="311.0" mnemonicParsing="false" onAction="#SaveBtnClick" text="Save" />
-            <Button fx:id="LoadBtn" layoutX="67.0" layoutY="305.0" mnemonicParsing="false" onAction="#LoadBtnClick" text="Load" />
+            <RadioButton fx:id="SortSerialBtn" layoutX="8.0" layoutY="44.0" mnemonicParsing="false" onAction="#SortSerialNumClick" text="Serial Number" toggleGroup="$SortGroup" />
+            <RadioButton fx:id="SortPriceBtn" layoutX="9.0" layoutY="70.0" mnemonicParsing="false" onAction="#SortPriceClick" text="Price" toggleGroup="$SortGroup" />
+            <Button fx:id="SaveBtn" layoutX="8.0" layoutY="363.0" mnemonicParsing="false" onAction="#SaveBtnClick" text="Save" />
+            <Button fx:id="LoadBtn" layoutX="84.0" layoutY="363.0" mnemonicParsing="false" onAction="#LoadBtnClick" text="Load" />
+            <Text layoutX="45.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort" />
          </children>
       </AnchorPane>
    </left>

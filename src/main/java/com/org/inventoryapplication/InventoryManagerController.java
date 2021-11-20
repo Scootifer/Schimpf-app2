@@ -1,6 +1,10 @@
 package com.org.inventoryapplication;
 
-import javafx.collections.ObservableList;
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Scott Schimpf
+ */
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -52,10 +56,10 @@ public class InventoryManagerController implements Initializable {
     ListView<InventoryItem> ListViewID;
 
     InventoryManagerCore core = new InventoryManagerCore();
-    final int PASS = 0;
     final int FAIL = -1;
     final int FAIL_INVALID_FORMAT = -1;
     final int FAIL_ITEM_EXISTS = -2;
+    final int FAIL_ITEM_NOT_FOUND = -1;
 
 
     //reused from previous application adapted for this one
@@ -84,13 +88,15 @@ public class InventoryManagerController implements Initializable {
     //display a list of the items sorted by name
     @FXML
     void SortNameBtnClick(){
-
+        core.sortByName();
+        refreshList();
     }
 
     //display a list of the items sorted by serial number
     @FXML
     void SortSerialNumClick(){
-
+        core.sortBySerialNumber();
+        refreshList();
     }
 
 
@@ -113,24 +119,28 @@ public class InventoryManagerController implements Initializable {
             error.setHeaderText("Name input is not valid");
             error.setContentText("The items name must be 2-256 characters in length.");
             error.showAndWait();
+            return;
         }
         if(core.validateItemPrice(price) == FAIL) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setHeaderText("Price input is not valid");
             error.setContentText("The items price must be a decimal point number.");
             error.showAndWait();
+            return;
         }
         if(core.validateSerialNumber(serial) == FAIL_INVALID_FORMAT) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setHeaderText("Serial Number input is not valid");
             error.setContentText("The serial number must be input in the format A-XXX-XXX-XXX \nWhere A must be a letter and X can be either a letter or digit");
             error.showAndWait();
+            return;
         }
         if(core.validateSerialNumber(serial) == FAIL_ITEM_EXISTS) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setHeaderText("Serial Number input is not valid");
             error.setContentText("The serial number of each item must be unique!");
             error.showAndWait();
+            return;
         }
 
         core.addItem(serial, name, price);
@@ -141,32 +151,91 @@ public class InventoryManagerController implements Initializable {
     //will edit the selected element
     @FXML
     void editItem(){
+        String name = NameField.getText();
+        String serial = SerialNumField.getText();
+        String price = PriceField.getText();
+
+        if(!name.equals(core.getSelectedCellName())) {
+            core.editSelectedItemName(name);
+        }
+        if(!serial.equals(core.getSelectedCellSerial())) {
+            core.editSelectedItemSerial(serial);
+        }
+        if(!price.equals(core.getSelectedCellPriceString())) {
+            core.editSelectedItemPrice(price);
+        }
+
 
     }
 
     //will remove the selected element
     @FXML
     void removeBtnClick(){
-
+        core.removeSelectedItem();
+        refreshList();
     }
 
     //function will clear the core inventory and display list
     @FXML
     void clearBtnClick(){
-
+        core.clearInventory();
+        refreshList();
     }
 
     //function will display the core save of the list in the ManagerCore
     @FXML
     void showAllBtnClick(){
+        core.showAll();
+        refreshList();
 
+        //Sets the sort radials correct
+        if(SortNameBtn.isSelected()) SortNameBtn.fire();
+        if(SortSerialBtn.isSelected()) SortSerialBtn.fire();
+        if(SortPriceBtn.isSelected()) SortPriceBtn.fire();
     }
 
-    //todo set selected cell to null
     //function will check if the serial number or name section are null and search for the item. if both spaces are occupied use the program will throw an error
     @FXML
     void searchBtnClick(){
+        String serial = SearchSerialField.getText();
+        String name = SearchNameField.getText();
 
+         if( (serial == null && name == null) ) {
+
+
+             Alert error = new Alert(Alert.AlertType.ERROR);
+             error.setHeaderText("Invalid Search Parameters");
+             error.setContentText("Please enter only a serial number OR name!");
+             error.showAndWait();
+             return;
+         }
+         if( (serial!= null && name!= null) && (serial.length() >0 && name.length() > 0) ) {
+             Alert error = new Alert(Alert.AlertType.ERROR);
+             error.setHeaderText("Invalid Search Parameters");
+             error.setContentText("Please enter only a serial number OR name!");
+             error.showAndWait();
+             return;
+         }
+
+
+         if(serial == null || serial.length() == 0) {
+             if(core.searchName(name) == FAIL_ITEM_NOT_FOUND) {
+                 Alert error = new Alert(Alert.AlertType.ERROR);
+                 error.setHeaderText("Item not found!");
+                 error.showAndWait();
+                 return;
+             }
+         }
+
+         else {
+             if(core.searchSerial(serial) == FAIL_ITEM_NOT_FOUND) {
+                 Alert error = new Alert(Alert.AlertType.ERROR);
+                 error.setHeaderText("Item not found!");
+                 error.showAndWait();
+                 return;
+             }
+         }
+        refreshList();
     }
 
 
