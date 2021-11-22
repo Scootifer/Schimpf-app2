@@ -60,7 +60,7 @@ public class TestClass {
     void testLoad() {
         InventoryManagerCore core = new InventoryManagerCore();
         ArrayList<InventoryItem> EXPECTED = new ArrayList<>();
-        File f = new File("./data/test.tsv");
+        File f = new File("./data/test.txt");
 
         InventoryItem item = new InventoryItem("name", "A-111-222-333", 10.50);
         EXPECTED.add(item);
@@ -87,7 +87,6 @@ public class TestClass {
         core.addItem("A-111-222-334", "name2", "10.50");
 
         core.sortBySerialNumber();
-        
 
         Assertions.assertAll(
                 () -> Assertions.assertTrue(EXPECTED.get(0).equals(core.getDisplay_list().get(0))),
