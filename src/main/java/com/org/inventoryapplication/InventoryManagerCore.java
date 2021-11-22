@@ -246,6 +246,8 @@ public class InventoryManagerCore {
         this.inventory.remove(index);
         this.inventory.add(index, this.selectedItem);
 
+        this.refreshDisplayList();
+
     }
 
     //edits the selected item, and then replaces it with a new but modified copy
@@ -258,6 +260,8 @@ public class InventoryManagerCore {
         this.selectedItem.setSerial_number(serial);
         this.inventory.remove(index);
         this.inventory.add(index, this.selectedItem);
+
+        this.refreshDisplayList();
     }
 
     //edits the selected item, and then replaces it with a new but modified copy
@@ -270,6 +274,8 @@ public class InventoryManagerCore {
         this.selectedItem.setPrice(Double.parseDouble(price));
         this.inventory.remove(index);
         this.inventory.add(index, this.selectedItem);
+
+        this.refreshDisplayList();
     }
 
     int save(File file){
