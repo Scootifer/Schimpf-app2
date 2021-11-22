@@ -108,7 +108,6 @@ public class InventoryManagerCore {
     // The sorting is done by coming each item with the compare to function.
     void sortByName() {
 
-
         this.display_list.clear();
         this.current_sort = 3;
 
@@ -116,6 +115,7 @@ public class InventoryManagerCore {
 
             if(this.display_list.size() == 0) {
                 this.display_list.add(i);
+                System.out.println(i.getName());
                 continue;
             }
 
@@ -123,11 +123,14 @@ public class InventoryManagerCore {
                 InventoryItem current = display_list.get(x);
 
                 if(i.getName().compareTo(current.getName()) >= 0) {
+                    System.out.println(i.getName() + " " + current.getName() + " " + x);
                     this.display_list.add(x, i);
                     x=this.display_list.size() +1; //to stop the nested loop without stopping the original one.
                 }
                 else if(x== this.display_list.size()-1) {
+                    System.out.println(i.getName() + " " + current.getName() + " " + x);
                     this.display_list.add(i);
+                    x = this.display_list.size() +1;
                 }
 
             }
@@ -299,7 +302,6 @@ public class InventoryManagerCore {
     // assigns the appropriate parts to a new item.
     void load(File file) {
 
-        System.out.println(file.getAbsolutePath());
 
         try {
             Scanner scan = new Scanner(file);
@@ -313,7 +315,6 @@ public class InventoryManagerCore {
                 String name = parts[1];
                 String price = parts[2];
 
-                System.out.println(serial + " " + name + " " + price);
                 this.addItem(serial, name, price);
             }
 
