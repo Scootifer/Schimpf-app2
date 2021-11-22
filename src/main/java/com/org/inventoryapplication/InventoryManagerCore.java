@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -106,7 +105,7 @@ public class InventoryManagerCore {
     }
 
     //sorts the display list
-    // The sorting is done by coming each item with the compareto function.
+    // The sorting is done by coming each item with the compare to function.
     void sortByName() {
 
         this.display_list.clear();
@@ -278,6 +277,7 @@ public class InventoryManagerCore {
         this.refreshDisplayList();
     }
 
+    //Saves the files in 3 parts, the serial number, name, and price, all seperated by \t
     int save(File file){
         try{
             FileWriter fw = new FileWriter(file);
@@ -294,7 +294,9 @@ public class InventoryManagerCore {
         return PASS;
     }
 
-    int load(File file) {
+    //Uses string.split to split the string at it's seperation points. IE \t
+    // assigns the appropriate parts to a new item.
+    void load(File file) {
 
         System.out.println(file.getAbsolutePath());
 
@@ -315,13 +317,13 @@ public class InventoryManagerCore {
             }
 
         } catch (Exception e) {
-          return FAIL;
+          return;
         }
         refreshDisplayList();
 
-        return PASS;
     }
 
+    //refreshes the display list, used after making an alteration to a pre-sorted or searched list.
     void refreshDisplayList(){
         switch (this.current_sort) {
             case 0 -> this.display_list = FXCollections.observableArrayList(inventory);
@@ -331,6 +333,7 @@ public class InventoryManagerCore {
         }
     }
 
+    //sets the display list to all items
     void showAll(){
         this.current_sort = 0;
         refreshDisplayList();
@@ -346,23 +349,28 @@ public class InventoryManagerCore {
         this.selectedItem = currentCell;
     }
 
+    // returns selected cells serial number
     public String getSelectedCellSerial(){
         return this.selectedItem.getSerial_number();
     }
 
+    //returns the selected cells name
     public String getSelectedCellName(){
         return this.selectedItem.getName();
     }
 
+    //returns the selected cells price
     public String getSelectedCellPriceString(){
         double pr = this.selectedItem.getPrice();
         return Double.toString(pr);
     }
 
+    //returns an observable list of the display list, usable by the refresh list function in the controller
     public ObservableList<InventoryItem> getDisplay_list() {
         return display_list;
     }
 
+    //returns the inventory of the core as an array list
     public ArrayList<InventoryItem> getInventory() {
         return inventory;
     }

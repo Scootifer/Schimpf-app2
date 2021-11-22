@@ -5,7 +5,6 @@ package com.org.inventoryapplication;
  *  Copyright 2021 Scott Schimpf
  */
 
-import java.util.Formatter;
 
 public class InventoryItem {
     String serial_number;

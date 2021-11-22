@@ -3,7 +3,44 @@
 InventoryManagerController -> InventoryManagerCore
 
 class InventoryManagerController {
+    ToggleGroup SortGroup
+    RadioButton SortNameBtn
+    RadioButton SortSerialBtn
+    RadioButton SortPriceBtn
+    TextField SerialNumField
+    TextField NameField
+    TextField PriceField
+    Button AddBtn
+    Button EditBtn
+    Button RemoveBtn
+    Button ClearBtn
+    Button SearchBtn
+    Button ShowAllBtn
+    TextField SearchSerialField
+    TextField SearchNameField
+    Button SaveBtn
+    Button LoadBtn
 
+    ListView<InventoryItem> ListViewID;
+    InventoryManagerCore core = new InventoryManagerCore();
+    final int FAIL = -1;
+    final int FAIL_INVALID_FORMAT
+    final int FAIL_ITEM_EXISTS
+    final int FAIL_ITEM_NOT_FOUND
+
+    void initialize(URL url, ResourceBundle rb)
+    void SortNameBtnClick()
+    void SortSerialNumClick()
+    void SortPriceClick()
+    void addItem()
+    void editItem()
+    void removeBtnClick()
+    void clearBtnClick()
+    void showAllBtnClick()
+    void searchBtnClick()
+    void SaveBtnClick()
+    void LoadBtnClick()
+    void refreshList()
 
 }
 
@@ -17,23 +54,31 @@ class InventoryManagerCore{
 -SortByName()
 -SearchName(String name)
 -SearchSerial(String serial)
--ValidateSerialNumber(String serial)
--ValidateItemPrice(String price)
--ValidateItemName(Sting name)
--ClearInventory()
--DeleteSelectedItem()
+-int ValidateSerialNumber(String serial)
+-int ValidateItemPrice(String price)
+-int ValidateItemName(Sting name)
+-void ClearInventory()
+-void DeleteSelectedItem()
 -EditSelectedItemName(String name)
 -EditSelectedItemSerial(String serial)
 -EditSelectedItemPrice(double price)
+-String getSelectedCellDescription()
+-String getSelectedCellName()
+-String getSelectedCellPrice()
 -Save()
 -Load()
 -void setCurrentCell(InventoryItem currentCell)
--boolean cellSelectedDoesNotExist
+-boolean cellSelectedDoesNotExist()
+-void refreshDisplayList*(
+
+
 }
 class InventoryItem{
 +String serial_number
 +String name
 +Double price
+-equals(InventoryItem i)
+-toString()
 
 }
 @enduml
