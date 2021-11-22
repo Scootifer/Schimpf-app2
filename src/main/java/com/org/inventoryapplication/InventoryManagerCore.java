@@ -91,7 +91,7 @@ public class InventoryManagerCore {
             for(int x = 0; x<this.display_list.size(); x++) {
                 InventoryItem current = display_list.get(x);
 
-                if(i.getName().compareTo(current.getName()) >= 0) {
+                if(i.getSerial_number().compareTo(current.getSerial_number()) >= 0) {
                     this.display_list.add(x, i);
                     x=this.display_list.size() +1; //to stop the nested loop without stopping the original one.
                 }
@@ -107,6 +107,7 @@ public class InventoryManagerCore {
     //sorts the display list
     // The sorting is done by coming each item with the compare to function.
     void sortByName() {
+
 
         this.display_list.clear();
         this.current_sort = 3;
@@ -277,7 +278,7 @@ public class InventoryManagerCore {
         this.refreshDisplayList();
     }
 
-    //Saves the files in 3 parts, the serial number, name, and price, all seperated by \t
+    //Saves the files in 3 parts, the serial number, name, and price, all separated by \t
     int save(File file){
         try{
             FileWriter fw = new FileWriter(file);
@@ -294,7 +295,7 @@ public class InventoryManagerCore {
         return PASS;
     }
 
-    //Uses string.split to split the string at it's seperation points. IE \t
+    //Uses string.split to split the string at its separation points. IE \t
     // assigns the appropriate parts to a new item.
     void load(File file) {
 

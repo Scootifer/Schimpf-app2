@@ -159,4 +159,56 @@ public class TestClass {
                 () -> Assertions.assertTrue(EXPECTED.get(1).equals(core.getDisplay_list().get(1)))
         );
     }
+
+    @Test
+    void testClear(){
+        InventoryManagerCore core = new InventoryManagerCore();
+
+        core.addItem("A-111-222-333", "name", "10.50");
+        core.addItem("A-111-222-334", "name2", "10.60");
+
+        core.clearInventory();
+
+        Assertions.assertEquals(0, core.getInventory().size());
+    }
+
+    @Test
+    void testSearchName() {
+        InventoryManagerCore core = new InventoryManagerCore();
+        InventoryItem EXPECTED = new InventoryItem("name", "A-111-222-333", 10.50);
+
+        core.addItem("A-111-222-333", "name", "10.50");
+        core.addItem("A-111-222-334", "name2", "10.60");
+
+        core.searchName("name");
+
+        Assertions.assertTrue(EXPECTED.equals(core.getDisplay_list().get(0)));
+    }
+
+    @Test
+    void testSearchSerial() {
+        InventoryManagerCore core = new InventoryManagerCore();
+        InventoryItem EXPECTED = new InventoryItem("name", "A-111-222-333", 10.50);
+
+        core.addItem("A-111-222-333", "name", "10.50");
+        core.addItem("A-111-222-334", "name2", "10.60");
+
+        core.searchSerial("A-111-222-333");
+
+        Assertions.assertTrue(EXPECTED.equals(core.getDisplay_list().get(0)));
+    }
+
+    @Test
+    void testValidationChecks(){
+        InventoryManagerCore core = new InventoryManagerCore();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(-1, core.validateItemName("a")),
+                () -> Assertions.assertEquals(0, core.validateItemName("abb")),
+                () -> Assertions.assertEquals(-1, core.validateSerialNumber("a")),
+                () -> Assertions.assertEquals(0, core.validateItemName("A-111-111-111")),
+                () -> Assertions.assertEquals(-1, core.validateItemPrice("a")),
+                () -> Assertions.assertEquals(0, core.validateItemPrice("15"))
+        );
+    }
 }
