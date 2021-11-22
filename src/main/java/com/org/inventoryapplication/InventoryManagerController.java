@@ -166,7 +166,7 @@ public class InventoryManagerController implements Initializable {
         if(!price.equals(core.getSelectedCellPriceString())) {
             core.editSelectedItemPrice(price);
         }
-
+        refreshList();
 
     }
 
