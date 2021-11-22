@@ -115,7 +115,6 @@ public class InventoryManagerCore {
 
             if(this.display_list.size() == 0) {
                 this.display_list.add(i);
-                System.out.println(i.getName());
                 continue;
             }
 
@@ -123,12 +122,10 @@ public class InventoryManagerCore {
                 InventoryItem current = display_list.get(x);
 
                 if(i.getName().compareTo(current.getName()) >= 0) {
-                    System.out.println(i.getName() + " " + current.getName() + " " + x);
                     this.display_list.add(x, i);
                     x=this.display_list.size() +1; //to stop the nested loop without stopping the original one.
                 }
                 else if(x== this.display_list.size()-1) {
-                    System.out.println(i.getName() + " " + current.getName() + " " + x);
                     this.display_list.add(i);
                     x = this.display_list.size() +1;
                 }
