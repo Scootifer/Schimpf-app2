@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TestClass {
 
@@ -65,9 +67,24 @@ public class TestClass {
         InventoryItem item = new InventoryItem("name", "A-111-222-333", 10.50);
         EXPECTED.add(item);
 
-        System.out.println(core.load(f));
+        core.load(f);
 
         Assertions.assertTrue(EXPECTED.get(0).equals(core.getInventory().get(0)));
+
+    }
+
+    @Test
+    void testSave() throws FileNotFoundException {
+        InventoryManagerCore core = new InventoryManagerCore();
+        File f = new File("./data/testSave.txt");
+        core.addItem("A-111-222-333", "name", "10.50");
+
+        core.save(f);
+        Scanner EXPECTED = new Scanner(new File("./data/testSaveEXPECTED.txt"));
+        Scanner actual = new Scanner(f);
+
+
+        Assertions.assertEquals(EXPECTED.nextLine(), actual.nextLine());
 
     }
 
