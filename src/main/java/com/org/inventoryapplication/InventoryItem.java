@@ -5,6 +5,8 @@ package com.org.inventoryapplication;
  *  Copyright 2021 Scott Schimpf
  */
 
+import java.util.Formatter;
+
 public class InventoryItem {
     String serial_number;
     String name;
@@ -42,6 +44,12 @@ public class InventoryItem {
 
     @Override
     public String toString() {
-        return String.format(" %-13s | %-256s | %15.2f", this.serial_number, this.name, this.price);
+
+        return String.format("%-13s | %-256s | %-8.2f", this.serial_number, this.name, this.price);
+    }
+
+
+    public boolean equals(InventoryItem i){
+        return this.serial_number.equals(i.getSerial_number()) && this.name.equals(i.getName()) && this.price == i.getPrice();
     }
 }

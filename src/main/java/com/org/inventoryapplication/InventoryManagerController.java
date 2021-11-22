@@ -8,7 +8,9 @@ package com.org.inventoryapplication;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -241,12 +243,26 @@ public class InventoryManagerController implements Initializable {
 
     @FXML
     void SaveBtnClick(){
+        FileChooser fc = new FileChooser();
+        File file = fc.showOpenDialog(SaveBtn.getScene().getWindow());
+        if(core.save(file) == FAIL) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setHeaderText("Error Saving");
+            error.showAndWait();
+        }
 
+        Alert success = new Alert(Alert.AlertType.INFORMATION);
+        success.setHeaderText("Success!");
+        success.setContentText("Successfully saved.");
+        success.show();
     }
 
     @FXML
     void LoadBtnClick(){
-
+        FileChooser fc = new FileChooser();
+        File file = fc.showOpenDialog(LoadBtn.getScene().getWindow());
+        core.load(file);
+        refreshList();
     }
 
     //will refresh the listview with the passed in list, presumably the "display_list"

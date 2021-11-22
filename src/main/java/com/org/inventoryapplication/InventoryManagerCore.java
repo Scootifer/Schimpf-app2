@@ -8,7 +8,11 @@ package com.org.inventoryapplication;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 // Welcome to the core of the inventory manager. Most methods here will operate on a PASS or FAIL scale
 // A method will return 0 for pass, or -1 for fail as declared by the final variables
@@ -199,7 +203,7 @@ public class InventoryManagerCore {
     //will validate the passed string and return 0 for valid or -1 for invalid
     int validateItemPrice(String price) {
         try {
-            if(Integer.parseInt(price) >= 0) return PASS;
+            if(Double.parseDouble(price) >= 0) return PASS;
         } catch(Exception e) {
             return FAIL;
         }
@@ -268,12 +272,48 @@ public class InventoryManagerCore {
         this.inventory.add(index, this.selectedItem);
     }
 
-    void save(){
+    int save(File file){
+        try{
+            FileWriter fw = new FileWriter(file);
+            for(InventoryItem i : this.inventory) {
+                fw.append(i.getSerial_number()).append("\t").append(i.getName()).append("\t").append(String.valueOf(i.getPrice())).append("\n");
+            }
+            fw.close();
 
+        }catch(Exception e) {
+            return FAIL;
+        }
+
+
+        return PASS;
     }
 
-    void load() {
+    int load(File file) {
 
+        System.out.println(file.getAbsolutePath());
+
+        try {
+            Scanner scan = new Scanner(file);
+
+            while(scan.hasNextLine()) {
+
+                String line = scan.nextLine();
+
+                String[] parts = line.split("\t");
+                String serial = parts[0];
+                String name = parts[1];
+                String price = parts[2];
+
+                System.out.println(serial + " " + name + " " + price);
+                this.addItem(serial, name, price);
+            }
+
+        } catch (Exception e) {
+          return FAIL;
+        }
+        refreshDisplayList();
+
+        return PASS;
     }
 
     void refreshDisplayList(){
@@ -315,5 +355,9 @@ public class InventoryManagerCore {
 
     public ObservableList<InventoryItem> getDisplay_list() {
         return display_list;
+    }
+
+    public ArrayList<InventoryItem> getInventory() {
+        return inventory;
     }
 }
